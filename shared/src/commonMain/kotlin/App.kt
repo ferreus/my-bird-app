@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import com.everysight.evskit.EVS
 import dev.icerock.moko.mvvm.compose.getViewModel
 import dev.icerock.moko.mvvm.compose.viewModelFactory
 import io.kamel.image.KamelImage
@@ -80,6 +81,13 @@ fun BirdsPage(viewModel: BirdsViewModel) {
                 ) {
                     Text(category)
                 }
+            }
+            Button(
+                onClick = {
+                    EVS.instance().showUI("configure")
+                }
+            ) {
+                Text("Configure")
             }
         }
         AnimatedVisibility(visible = uiState.selectedImages.isNotEmpty()) {

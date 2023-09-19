@@ -41,6 +41,7 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
                 api("dev.icerock.moko:mvvm-core:0.16.1")
                 api("dev.icerock.moko:mvvm-compose:0.16.1")
+                implementation("com.everysight.evskit:shared:0.1")
             }
         }
         val androidMain by getting {
