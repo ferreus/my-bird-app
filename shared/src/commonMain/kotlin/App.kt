@@ -1,3 +1,8 @@
+import UIKit.app.Screen
+import UIKit.app.data.EvsColor
+import UIKit.app.interfaces.IEvsApp
+import UIKit.services.AppErrorCode
+import UIKit.services.IEvsAppEvents
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -34,10 +39,39 @@ import io.kamel.image.asyncPainterResource
 import model.BirdImage
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
+class HelloWorldScreen: Screen() {
+    private val text = UIKit.widgets.Text()
+    override fun onCreate() {
+
+        text.setText("Hello World").setResource(UIKit.app.resources.Font.StockFont.Medium).setTextAlign(
+            UIKit.app.data.Align.center)
+        text.setX(getWidth()/2).setY(getHeight()/2).setForegroundColor(EvsColor.Green.rgba)
+        add(text)
+    }
+}
+
+val appEventListener = object  : IEvsAppEvents {
+    override fun onError(errCode: AppErrorCode, description: String) {
+    }
+
+    override fun onReady() {
+        EVS.instance().screens().addScreen(HelloWorldScreen())
+    }
+
+}
+
 @Composable
 fun BirdAppTheme(
     content: @Composable () -> Unit
 ) {
+    LaunchedEffect(Unit) {
+        EVS.instance().registerAppEvents(appEventListener)
+        with(EVS.instance().comm()){
+            //registerCommunicationEvents(this@HelloWorldActivity)
+            if(hasConfiguredDevice()) connect()
+        }
+
+    }
     MaterialTheme(
         colors = MaterialTheme.colors.copy(primary = Color.Black),
         shapes = MaterialTheme.shapes.copy(

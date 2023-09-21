@@ -9,7 +9,8 @@ actual fun getPlatformName(): String = "Android"
 
 
 fun initEvs(context: Context) {
-    Evs.init(context)
+    Evs.init(context).start()
+    Evs.startDefaultLogger()//optional
 }
 
 fun configure() {
